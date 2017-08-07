@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -44,17 +45,26 @@ public class Practice13GetTextBoundsView extends View {
         super.onDraw(canvas);
 
         canvas.drawRect(50, top, getWidth() - 50, bottom, paint1);
+        String[] texts = {text1,text2,text3,text4,text5,text6};
 
         // 使用 Paint.getTextBounds() 计算出文字的显示区域
         // 然后计算出文字的绘制位置，从而让文字上下居中
         // 这种居中算法的优点是，可以让文字精准地居中，分毫不差
+        Rect bounds = new Rect();
 
         int middle = (top + bottom) / 2;
-        canvas.drawText(text1, 100, middle, paint2);
-        canvas.drawText(text2, 200, middle, paint2);
-        canvas.drawText(text3, 300, middle, paint2);
-        canvas.drawText(text4, 400, middle, paint2);
-        canvas.drawText(text5, 500, middle, paint2);
-        canvas.drawText(text6, 600, middle, paint2);
+
+        for(int i =0 ;i<texts.length;i++){
+            paint2.getTextBounds(texts[i],0,texts[i].length(),bounds);//分析此处bounds的值实际等价于canvas以x轴（右正，上负）为基准线画出当前字符串，可知(bounds.top+bounds.bottom)/2 （这里中心线离基准线的坐标必为负数）为文字中心点到基准线的距离
+            float tempMiddle = (bounds.top + bounds.bottom)/2;//现在我们需要让文字居中于上述矩形，而矩形的中间线为x=middle，那基准线自然就要向下平移-(bounds.top+bounds.bottom)/2个单位
+            float yOffset = -tempMiddle;
+            canvas.drawText(texts[i],100+i*100,middle+yOffset,paint2);
+        }
+      /*  canvas.drawText(text1, 100, middle1, paint2);
+        canvas.drawText(text2, 200, middle2, paint2);
+        canvas.drawText(text3, 300, middle3, paint2);
+        canvas.drawText(text4, 400, middle4, paint2);
+        canvas.drawText(text5, 500, middle5, paint2);
+        canvas.drawText(text6, 600, middle6, paint2);*/
     }
 }
