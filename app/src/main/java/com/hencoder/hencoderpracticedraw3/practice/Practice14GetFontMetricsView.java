@@ -52,7 +52,7 @@ public class Practice14GetFontMetricsView extends View {
         }
 
         /**
-         * 算法原理跟前一个联系类似，采用中心线对齐原理，-(fontMetrics.descent + fontMetrics.ascent)/2 为绘制文字中心线到基准线的距离（为什么是负值请参考前一个练习）
+         * 算法原理跟前一个练习类似，采用中心线对齐原理，-(fontMetrics.descent + fontMetrics.ascent)/2 为绘制文字中心线到基准线的距离（为什么是负值请参考前一个练习）
          * 然后我们来处理指定矩形居中的问题，指定矩形中心线为middle，如果让文字的中心线和矩形中心对齐，文字的基准线自然要向下平移-(fontMetrics.descent + fontMetrics.ascent)/2个单位
          */
       /*  canvas.drawText(texts[0], 100, middle, paint2);
